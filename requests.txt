@@ -1,0 +1,3 @@
+Mastodon.py
+ollama
+beautifulsoup4

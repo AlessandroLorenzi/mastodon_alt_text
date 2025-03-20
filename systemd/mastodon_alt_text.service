@@ -1,0 +1,14 @@
+[Unit]
+Description=Mastodon Alt Text Service
+After=network.target
+
+[Service]
+Type=simple
+User=alorenzi
+WorkingDirectory=/srv/mastodon_alt_text/
+ExecStart=/srv/mastodon_alt_text/venv/bin/python /srv/mastodon_alt_text/main.py
+EnvironmentFile=/srv/mastodon_alt_text/.env
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
