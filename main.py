@@ -75,6 +75,7 @@ def translate(text: str, lang: str = "italian") -> str:
 
 
 def elaborate_toot(toot: dict):
+    log.debug(f"Elaborating toot {toot['uri']}")
     new_media_ids = []
     updated = False
 
@@ -82,8 +83,11 @@ def elaborate_toot(toot: dict):
         toot["content"], "html.parser"
     )  # because toot["content"] is inside <p></p> (facepalm)
     status = soup.get_text()
+
     for media in toot["media_attachments"]:
-        if media["type"] == "image" and media["description"] == "":
+        if media["type"] == "image" and (
+            media["description"] == "" or media["description"] is None
+        ):
             log.info(f"Elaborating media for toot {toot['uri']} - {status}")
             with ImageDownloader(media["url"]) as image_path:
                 description = extract_description(image_path)
